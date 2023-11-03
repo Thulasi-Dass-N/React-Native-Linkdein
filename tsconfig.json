@@ -1,11 +1,9 @@
-
 {
-  "extends": "@tsconfig/react-native/tsconfig.json",
+  "extends": "@tsconfig/react-native/tsconfig.json" /* Recommended React Native TSConfig base */,
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
-    "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
@@ -16,18 +14,15 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+
+    "baseUrl": ".",
+    "paths": {
+      "@src/*": ["src/*"]
+    },
+
+    "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
-  "jest": {
-    "collectCoverage": true,
-    "collectCoverageFrom": ["./src/**"],
-    "coverageThreshold": {
-      "global": {
-        "lines": 90
-      }
-    }
-  },
-  // "extends": "./tsconfig.paths.json",
-  "include": ["src", "craco.config.js", "public/firebase-messaging-sw.js"],
-  "exclude": ["node_modules", "build"]
+  "exclude": ["node_modules", "build"],
+  "include": ["src/**/*", "tests/**/*"]
 }

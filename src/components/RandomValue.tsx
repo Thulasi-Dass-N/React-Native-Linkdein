@@ -1,5 +1,4 @@
-import {Pressable, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import { Pressable, StyleSheet, Text } from "react-native";
 
 type ItemProps = {
   id: number | undefined;
@@ -16,7 +15,7 @@ const RandomValue = ({
 }: ItemProps) => {
   const handlePress = () => {
     // if (isDisabled) {
-      console.log('Pressed', id);
+    // console.log('Pressed', id);()
     //   return;
     // }
     onSelected(id);
@@ -36,10 +35,10 @@ const styles = StyleSheet.create({
   randomValue: {
     fontSize: 35,
     width: 150,
-    backgroundColor: '#999',
+    backgroundColor: "#999",
     marginHorizontal: 15,
     marginVertical: 35,
-    textAlign: 'center',
+    textAlign: "center",
     padding: 10,
     borderWidth: 2,
     borderRadius: 8,

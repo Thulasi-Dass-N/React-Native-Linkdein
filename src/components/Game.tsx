@@ -1,26 +1,25 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import RandomValue from './RandomValue';
+/* eslint-disable react/no-array-index-key */
+import { StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import RandomValue from "@src/components/RandomValue";
 
-type ItemProps = {RandomNumberCount: number; Timer: number};
+type ItemProps = { RandomNumberCount: number; Timer: number };
 
-const Game = ({RandomNumberCount, Timer}: ItemProps) => {
+const Game = ({ RandomNumberCount, Timer }: ItemProps) => {
   const [selectedValue, setSelectedValue] = useState([] as any);
   const [randomValues, setRandomValues] = useState([] as any);
-  const [gameStatus, setGameStatus] = useState<String>('PLAYING');
+  const [gameStatus, setGameStatus] = useState<string>("PLAYING");
   const [gameTimer, setGameTimer] = useState<number>(Timer);
 
   useEffect(() => {
-    const RandomValues = Array.from({length: RandomNumberCount}).map(
+    const RandomValues = Array.from({ length: RandomNumberCount }).map(
       () => 1 + Math.floor(10 * Math.random()),
     );
     setRandomValues(RandomValues);
   }, []);
   useEffect(() => {
     const Interval = setInterval(() => {
-      setGameTimer(prev => {
-        return prev - 1;
-      });
+      setGameTimer(prev => prev - 1);
     }, 1000);
 
     return () => {
@@ -31,30 +30,27 @@ const Game = ({RandomNumberCount, Timer}: ItemProps) => {
   const RandomNumberTarget = randomValues
     .slice(0, RandomNumberCount - 2)
     .reduce((acc: any, cur: any) => acc + cur, 0);
-  const isNumberSelected = (numIndex: number) => {
-    return selectedValue.indexOf(numIndex) >= 0;
-  };
+  const isNumberSelected = (numIndex: number) =>
+    selectedValue.indexOf(numIndex) >= 0;
   const selectRandomValue = (index: number) => {
-    setSelectedValue((prev: any) => {
-      return [...prev, index];
-    });
+    setSelectedValue((prev: any) => [...prev, index]);
   };
 
   const GameStatus = () => {
-    const Sum = selectedValue.reduce((acc: number, curr: number) => {
-      return acc + randomValues[curr];
-    }, 0);
-    console.log(Sum);
+    const Sum = selectedValue.reduce(
+      (acc: number, curr: number) => acc + randomValues[curr],
+      0,
+    );
 
     if (RandomNumberTarget > 0) {
       if (Sum < RandomNumberTarget) {
-        setGameStatus('PLAYING');
+        setGameStatus("PLAYING");
       }
       if (Sum === RandomNumberTarget) {
-        setGameStatus('WON');
+        setGameStatus("WON");
       }
       if (Sum > RandomNumberTarget) {
-        setGameStatus('LOST');
+        setGameStatus("LOST");
       }
     }
   };
@@ -74,7 +70,7 @@ const Game = ({RandomNumberCount, Timer}: ItemProps) => {
             key={index}
             id={index}
             RandomNumberValue={RandomNum}
-            isDisabled={isNumberSelected(index) || gameStatus !== 'PLAYING'}
+            isDisabled={isNumberSelected(index) || gameStatus !== "PLAYING"}
             onSelected={selectRandomValue}
           />
         ))}
@@ -96,28 +92,28 @@ const styles: {
 } = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ddd',
+    backgroundColor: "#ddd",
     paddingTop: 100,
   },
   randomValue: {
     fontSize: 40,
     marginHorizontal: 50,
-    textAlign: 'center',
+    textAlign: "center",
     padding: 10,
   },
   RandomContainer: {
     flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
   },
   STATUS_PLAYING: {
-    backgroundColor: '#aaa',
+    backgroundColor: "#aaa",
   },
   STATUS_WON: {
-    backgroundColor: 'green',
+    backgroundColor: "green",
   },
   STATUS_LOST: {
-    backgroundColor: 'red',
+    backgroundColor: "red",
   },
 });
