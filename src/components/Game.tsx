@@ -1,13 +1,19 @@
 /* eslint-disable react/no-array-index-key */
-import { StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import { Button, StyleSheet, Text, View } from "react-native";
+import { useEffect, useState } from "react";
 import RandomValue from "@src/components/RandomValue";
+import shuffle from "lodash.shuffle";
 
-type ItemProps = { RandomNumberCount: number; Timer: number };
+type ItemProps = {
+  RandomNumberCount: number;
+  Timer: number;
+  startNewGame: Function;
+};
 
-const Game = ({ RandomNumberCount, Timer }: ItemProps) => {
+const Game = ({ RandomNumberCount, Timer, startNewGame }: ItemProps) => {
   const [selectedValue, setSelectedValue] = useState([] as any);
   const [randomValues, setRandomValues] = useState([] as any);
+  const [target, setTarget] = useState([] as any);
   const [gameStatus, setGameStatus] = useState<string>("PLAYING");
   const [gameTimer, setGameTimer] = useState<number>(Timer);
 
@@ -15,19 +21,27 @@ const Game = ({ RandomNumberCount, Timer }: ItemProps) => {
     const RandomValues = Array.from({ length: RandomNumberCount }).map(
       () => 1 + Math.floor(10 * Math.random()),
     );
+    setTarget(shuffle(RandomValues));
+
     setRandomValues(RandomValues);
   }, []);
+
   useEffect(() => {
     const Interval = setInterval(() => {
-      setGameTimer(prev => prev - 1);
+      if (gameTimer !== 0) {
+        setGameTimer(prev => prev - 1);
+      }
     }, 1000);
+    if (gameStatus !== "PLAYING") {
+      clearInterval(Interval);
+    }
 
     return () => {
       clearInterval(Interval);
     };
-  }, []);
+  }, [target && gameTimer]);
 
-  const RandomNumberTarget = randomValues
+  const RandomNumberTarget = target
     .slice(0, RandomNumberCount - 2)
     .reduce((acc: any, cur: any) => acc + cur, 0);
   const isNumberSelected = (numIndex: number) =>
@@ -57,7 +71,10 @@ const Game = ({ RandomNumberCount, Timer }: ItemProps) => {
 
   useEffect(() => {
     GameStatus();
-  }, [selectedValue]);
+    if (gameTimer === 0 && gameStatus === "PLAYING") {
+      setGameStatus("LOST");
+    }
+  }, [selectedValue, gameTimer]);
 
   return (
     <View style={styles.container}>
@@ -75,12 +92,18 @@ const Game = ({ RandomNumberCount, Timer }: ItemProps) => {
           />
         ))}
       </View>
-      <Text
-        style={{
-          marginLeft: 100,
-        }}>
-        {gameTimer}
-      </Text>
+      <View style={styles.ButtonContainer}>
+        {gameStatus !== "PLAYING" ? (
+          <Button
+            title='New Game'
+            onPress={() => {
+              startNewGame();
+            }}
+          />
+        ) : (
+          <Text>{`Remaining Seconds ${gameTimer}`}</Text>
+        )}
+      </View>
     </View>
   );
 };
@@ -106,6 +129,10 @@ const styles: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-around",
+  },
+  ButtonContainer: {
+    alignItems: "center",
+    paddingVertical: 20,
   },
   STATUS_PLAYING: {
     backgroundColor: "#aaa",
