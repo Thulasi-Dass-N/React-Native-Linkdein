@@ -1,7 +1,7 @@
-import {StyleSheet, View} from 'react-native';
+import { StyleSheet, View } from "react-native";
 
-import React from 'react';
-import Game from './src/components/Game';
+import React from "react";
+import Game from "./src/components/Game";
 
 const App = () => {
   return (
