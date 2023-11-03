@@ -16,7 +16,7 @@ const RandomValue = ({
 }: ItemProps) => {
   const handlePress = () => {
     // if (isDisabled) {
-    //   console.log('Pressed', id);
+      console.log('Pressed', id);
     //   return;
     // }
     onSelected(id);

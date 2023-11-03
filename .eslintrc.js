@@ -4,27 +4,27 @@ module.exports = {
     node: true,
     browser: true,
     es2021: true,
-    "react-native/react-native": true,
-    "jest/globals": true,
+    'react-native/react-native': true,
+    'jest/globals': true,
   },
   extends: [
-    "plugin:react/recommended",
-    "prettier",
-    "eslint:recommended",
-    "plugin:jest/recommended",
+    'plugin:react/recommended',
+    'prettier',
+    'eslint:recommended',
+    'plugin:jest/recommended',
   ],
 
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: "latest",
-    sourceType: "module",
+    ecmaVersion: 'latest',
+    sourceType: 'module',
   },
 
-  plugins: ["react", "react-native", "detox"],
-  ignorePatterns: ["!.*", "dist", "node_modules"],
-    rules: {
+  plugins: ['react', 'react-native', 'detox'],
+  ignorePatterns: ['!.*', 'dist', 'node_modules'],
+  rules: {
     'react/prop-types': ['off'],
     'react/display-name': ['off'],
     'react/no-unescaped-entities': ['off'],
@@ -32,7 +32,7 @@ module.exports = {
     'linebreak-style': ['error', 'unix'],
     quotes: ['error', 'single'],
     semi: ['error', 'always'],
-    "no-console": ["error"],
+    'no-console': ['error'],
     curly: 'error',
     'no-else-return': 'error',
     'no-unneeded-ternary': 'error',
@@ -64,7 +64,7 @@ module.exports = {
 
   settings: {
     react: {
-      version: "detect",
+      version: 'detect',
     },
   },
 };
